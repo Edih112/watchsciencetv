@@ -29,6 +29,11 @@ control.addEventListener("mouseleave", function () {
     }
 });
 
+/**
+ * given channel number, returns channel name
+ * @param {number} channel 
+ * @returns string channelName
+ */
 function getChannelName(channel) {
     let name = "...";
     switch (channel) {
@@ -54,6 +59,9 @@ function getChannelName(channel) {
     return name;
 }
 
+/**
+ * resizes the video player eleemnt, what exactly tbd
+ */
 function resizePlayer() {
     let p = document.querySelector("#player");
     p.style.top = - window.innerHeight * 0.5 + "px";
@@ -61,6 +69,19 @@ function resizePlayer() {
     player.setSize(Math.min(window.innerHeight * 1.777, window.innerWidth), window.innerHeight * 2);
 }
 
+/**
+ * broadly gets the list in list.json of video ids defined on a
+ * per chapter basis, although I believe that it is "channel" and not 
+ * "chapter".
+ * 
+ * This is done in the form of a xhttp request, 
+ * @modifies the vids global variable which is a json object
+ * 
+ * Also seems to stop playing the channel for provided global
+ * "channelNumber".
+ * 
+ * TODO: figure out what readyState does here, either 
+ */
 function getList() {
     vids = {};
     let xhttp = new XMLHttpRequest();
@@ -71,17 +92,25 @@ function getList() {
             playChannel(channelNumber, false);
         }
     };
-    xhttp.open("GET", "https://ytch.xyz/list.json?t=" + Date.now());
+
+    // what is this doing here?
+    xhttp.open("GET", "list.json");
     xhttp.send();
 }
 
+/**
+ * 
+ * @param {number} ch channel number
+ * @param {boolean} s whether or not 
+ */
 function playChannel(ch, s) {
     if (ch < 10) {
         channelName.textContent = "CH 0" + ch;
     } else {
         channelName.textContent = "CH " + ch;
     }
-    channelName.textContent += " - " + getChannelName(ch);
+    channelName.textContent += " - " + 
+    getChannelName(ch);
 
     control.style.display = "flex";
     smpte.style.opacity = 0;
@@ -92,6 +121,7 @@ function playChannel(ch, s) {
     } else if (s) {
         getList();
     } else {
+        console.log("nope")
         smpte.style.opacity = 1;
     }
 }
