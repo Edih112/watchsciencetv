@@ -10,7 +10,7 @@ let player, playingNow, playingNowOrder, startAt, vids;
 let channelNumber = 1;
 let isMin = false, isMuted = true, isOn = true, showInfo = false;
 
-let watchHistory = {};
+let watchHistory = {};  
 
 if (localStorage.getItem("storedChannelNumber") === null) {
     channelNumber = 1;
