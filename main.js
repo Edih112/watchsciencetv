@@ -94,7 +94,7 @@ function getList() {
     };
 
     // what is this doing here?
-    xhttp.open("GET", "list.json");
+    xhttp.open("GET", "https://raw.githubusercontent.com/Edih112/watchsciencetv/refs/heads/main/list.json");
     xhttp.send();
 }
 
@@ -130,10 +130,10 @@ function sync(ch) {
     playingNow = 0;
     let t = Math.floor(Date.now() / 1000);
     for (let i in vids[ch]) {
-        if (t >= vids[ch][i].playAt && t < vids[ch][i].playAt + vids[ch][i].duration) {
+        if (t + 1723646897 >= vids[ch][i].playAt + t && t + 1723646897 < vids[ch][i].playAt + vids[ch][i].duration + t) {
             playingNowOrder = i;
             playingNow = vids[ch][i].id;
-            startAt = t - vids[ch][i].playAt;
+            startAt = 0 // t - vids[ch][i].playAt;
             return true;
         }
     }
